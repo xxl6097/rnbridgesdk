@@ -10,6 +10,7 @@ import com.facebook.react.uimanager.ViewManager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import com.facebook.react.bridge.JavaScriptModule;
 
 public class AndroidReactPackage implements ReactPackage {
     @NonNull
@@ -19,7 +20,11 @@ public class AndroidReactPackage implements ReactPackage {
         modules.add(new AndroidNativeModule(reactContext));
         return modules;
     }
-
+    @NonNull
+    @Override
+    public List<Class<? extends JavaScriptModule>> createJSModules() {
+        return Collections.emptyList();
+    }
 
     @NonNull
     @Override
