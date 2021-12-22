@@ -20,11 +20,12 @@ public class AndroidReactPackage implements ReactPackage {
         modules.add(new AndroidNativeModule(reactContext));
         return modules;
     }
-    @NonNull
-    @Override
-    public List<Class<? extends JavaScriptModule>> createJSModules() {
-        return Collections.emptyList();
-    }
+
+//    @NonNull
+//    @Override
+//    public List<Class<? extends JavaScriptModule>> createJSModules() {
+//        return Collections.emptyList();
+//    }
 
     @NonNull
     @Override
