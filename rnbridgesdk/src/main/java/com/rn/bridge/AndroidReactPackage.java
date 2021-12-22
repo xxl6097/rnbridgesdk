@@ -21,11 +21,11 @@ public class AndroidReactPackage implements ReactPackage {
         return modules;
     }
 
-//    @NonNull
 //    @Override
 //    public List<Class<? extends JavaScriptModule>> createJSModules() {
 //        return Collections.emptyList();
 //    }
+
 
     @NonNull
     @Override
