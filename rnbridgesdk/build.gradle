@@ -4,12 +4,12 @@ apply plugin: "maven-publish"
 apply plugin: 'com.github.dcendents.android-maven'
 
 
-//repositories {
-//    mavenCentral()
-//    google()
-//    jcenter()
-//    maven { url "https://jitpack.io" }
-//}
+repositories {
+    mavenCentral()
+    google()
+    jcenter()
+    maven { url "https://jitpack.io" }
+}
 
 
 ////// JitPack Maven
