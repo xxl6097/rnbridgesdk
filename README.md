@@ -6,7 +6,7 @@
 
 ## 1. app/build.gradle依赖库配置
     dependencies {
-        implementation 'com.github.xxxxx:mtscensesdk:0.0.0'
+        implementation 'com.github.xxl6097:rnbridgesdk:0.0.8'
     }
 
 ## 2. MainApplication类配置
