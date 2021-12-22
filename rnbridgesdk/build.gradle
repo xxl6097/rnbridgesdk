@@ -1,0 +1,74 @@
+apply plugin: "com.android.library"
+
+apply plugin: "maven-publish"
+apply plugin: 'com.github.dcendents.android-maven'
+
+
+//repositories {
+//    mavenCentral()
+//    google()
+//    jcenter()
+//    maven { url "https://jitpack.io" }
+//}
+
+
+////// JitPack Maven
+////Your Group
+//group='com.github.xxl6097'
+
+
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion '29.0.3'
+
+    defaultConfig {
+        minSdkVersion 11
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //implementation 'com.github.jitpack:android-example:1.0.1'
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+
+
+
+    // RxJava
+//    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
+//    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+//    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
+
+}
+
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            // Creates a Maven publication called "release".
+//            release(MavenPublication) {
+//                from components.release
+//                groupId = 'com.github.xxl6097'
+//                artifactId = 'mtscencesdk'
+//                version = '2.0.0'
+//            }
+//        }
+//    }
+//}
