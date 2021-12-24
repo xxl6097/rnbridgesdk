@@ -1,14 +1,23 @@
 package com.rn.bridge;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
+import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
+import android.app.Activity;
+import android.os.Bundle;
 
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.Callback;
-import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.module.annotations.ReactModule;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -16,7 +25,43 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AndroidApi {
+
+@ReactModule(name = OMDeviceModule.NAME)
+public class OMDeviceModule extends ReactContextBaseJavaModule{
+    public static final String NAME = "OMDeviceModule";
+    private Context context;
+
+    public OMDeviceModule(@Nullable ReactApplicationContext reactContext) {
+        super(reactContext);
+        context = reactContext;
+        Log.i("uu_","OMDeviceModule========>"+reactContext.toString());
+    }
+
+
+    @Override
+    public boolean canOverrideExistingModule() {
+        return true;
+    }
+
+    @NonNull
+    @Override
+    public String getName() {
+        return "OMDeviceModule";
+    }
+
+    @ReactMethod
+    public void invoke(final ReadableMap readableMap,final Callback callback){
+        Log.i("uu_","OMDeviceModule.invoke==>"+readableMap);
+        callJava(readableMap,callback,context);
+    }
+
+    @ReactMethod
+    public void toast(String methodName){
+        Log.i("uu_","OMDeviceModule.toast==>"+methodName);
+        Toast.makeText(context,methodName,Toast.LENGTH_LONG).show();
+    }
+
+
     //https://blog.csdn.net/weixin_33788424/article/details/117800333
     private static Map<String, Object> objects = new HashMap<>();
     private static String getClassName() {
@@ -29,7 +74,7 @@ public class AndroidApi {
     }
 
     public static void init(final Activity activity) {
-        Log.i("uu_", "AndroidApi==init==========");
+        Log.i("uu_", "OMDeviceModule==init==========");
 //        VolumeManager.getInstance().init(activity, new Handler());
 //        ScreenBrightnessApi.getApi().allowModifySettings(activity);
         String classname = getClassName();
@@ -77,7 +122,7 @@ public class AndroidApi {
         return bundle;
     }
 
-    public static void invoke(final ReadableMap readableMap, final Callback callback,
+    public static void callJava(final ReadableMap readableMap, final Callback callback,
                               final Context context) {
         if (readableMap == null) {
             if (callback != null) {
@@ -121,3 +166,7 @@ public class AndroidApi {
         }
     }
 }
+
+
+
+

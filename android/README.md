@@ -1,24 +1,57 @@
 [TOC]
 
-圆明视界OM系统接口文档  -- ShowDoc
-https://www.showdoc.com.cn/yuanshi
 
-npm publish
-# 一、SDK集成
+# 一、Android App工程配置
 
-## 1. 请打开一个终端/命令提示行，进入到项目目录中（即包含有 package.json 文件的目录），然后运行下列命令来安装：
+## 1. app/build.gradle依赖库配置
+    dependencies {
+        implementation 'com.github.xxxxx:mtscensesdk:0.0.0'
+    }
 
-    yarn add react-native-rnbridgesdk
+## 2. MainApplication类配置
+    public class MainApplication extends Application implements ReactApplication {
+    
+        private final ReactNativeHost mReactNativeHost =
+            new ReactNativeHost(this) {
+              @Override
+              public boolean getUseDeveloperSupport() {
+                return BuildConfig.DEBUG;
+            }
+    
+            @Override
+            protected List<ReactPackage> getPackages() {
+              @SuppressWarnings("UnnecessaryLocalVariable")
+              List<ReactPackage> packages = new PackageList(this).getPackages();
+                //添加React Native与java交互类
+                packages.add(new AndroidReactPackage());
+              return packages;
+            }
+    
+            @Override
+            protected String getJSMainModuleName() {
+              return "index";
+            }
+          };
+    }
+
+## 2. MainActivity类配置
+
+    public class MainActivity extends ReactActivity {
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+          //初始化如下代码
+          AndroidApi.init(this);
+          super.onCreate(savedInstanceState);
+        }
+    }
 
 
 # 二、React Native与Java数据交互
 
 ## 1. 获取设备信息调用方式
-
 ### 1.1 获取设备所有信息：
-
     const getAllInfo = () => {
-        NativeModules.OMDeviceModule.invoke({methodName: 'allInfo'}, result => {
+        NativeModules.AndroidNativeModule.invoke({methodName: 'allInfo'}, result => {
             console.log(result.mac);
             console.log(result.ip);
             console.log(result.netType);
@@ -60,16 +93,14 @@ npm publish
 -->
 
 ### 1.2 单独获取设备某个参数示例
-
     //获取设备Mac地址
     const getDeviceMac = () => {
-        NativeModules.OMDeviceModule.invoke({methodName: 'mac'}, result => {
+        NativeModules.AndroidNativeModule.invoke({methodName: 'mac'}, result => {
             console.log(result.mac);
         });
     };
 
 ### 1.3 目前支持的获取设备信息如下（注意参数大小写）
-
 | 参数                         | 类型     | 描述              |
 |:---------------------------|:-------|-----------------|
 | mac                        | String | 设备mac地址         |
@@ -87,11 +118,25 @@ npm publish
 
 ## 2.控制设备信息调用方式
 
+### 2.1 设置屏幕旋转：
+    //示例：设置屏幕旋转
+    const setRotation = value => {
+        NativeModules.AndroidNativeModule.invoke({methodName: 'setRotation', degree: value},  result => {
+                console.log(result);
+            },
+        );
+    };
 
-### 2.1  设置音量：
+| 参数          | 类型     | 描述                                                           |
+|:------------|:-------|--------------------------------------------------------------|
+| setRotation | String | 调用Java层旋转的函数                                                 |
+| degree      | String | degree:可以有4种值（"0"，"90"，"180"，"270"），其他值默认为和"0"一样的处理方式        |
+| result      | 对象     | Java函数调用结果反馈，result.code=0成功，result.code!=0失败,result.msg描述信息 |
 
+
+### 2.2 设置音量：
     const setVolume =(value)=> {
-        NativeModules.OMDeviceModule.invoke({methodName: 'setVolume', volume: value},  result => {
+        NativeModules.AndroidNativeModule.invoke({methodName: 'setVolume', volume: value},  result => {
                 console.log(result);
             },
         );
@@ -105,11 +150,9 @@ npm publish
 | result    | 对象     | Java函数调用结果反馈，result.code=0成功，result.code!=0失败,result.msg描述信息 |
 
 
-### 2.2 设置屏幕亮度：
-
-
+### 2.3 设置屏幕亮度：
     const setScreenBrightness =(value)=> {
-        NativeModules.OMDeviceModule.invoke({methodName: 'setScreenBrightness', brightness: value},  result => {
+        NativeModules.AndroidNativeModule.invoke({methodName: 'setScreenBrightness', brightness: value},  result => {
                 console.log(result);
             },
         );
@@ -123,60 +166,9 @@ npm publish
 | result              | 对象     | Java函数调用结果反馈，result.code=0成功，result.code!=0失败,result.msg描述信息 |
 
 
-### 2.3 设置屏幕亮度：
-
-    const setOnOffTime = (
-      year1,
-      month1,
-      day1,
-      hour1,
-      minute1,
-      year2,
-      month2,
-      day2,
-      hour2,
-      minute2,
-    ) => {
-      NativeModules.OMDeviceModule.invoke(
-        {
-          methodName: 'setOnOffTime',
-          on_year: year1,
-          on_month: month1,
-          on_day: day1,
-          on_hour: hour1,
-          on_minute: minute1,
-          off_year: year2,
-          off_month: month2,
-          off_day: day2,
-          off_hour: hour2,
-          off_minute: minute2,
-        },
-        result => {
-          console.log(result);
-        },
-      );
-    };
-
-| 参数           | 类型     | 描述                                                           |
-|:-------------|:-------|--------------------------------------------------------------|
-| setOnOffTime | String | 调用Java层设置音量的函数                                               |
-| on_year      | int    | 开机 年字段                                                       |
-| on_month     | int    | 开机 月字段                                                       |
-| on_day       | int    | 开机 日字段                                                       |
-| on_hour      | int    | 开机 小时字段                                                      |
-| on_minute    | int    | 开机 分钟字段                                                      |
-| of_year      | int    | 关机 年字段                                                       |
-| of_month     | int    | 关机 月字段                                                       |
-| of_day       | int    | 关机 日字段                                                       |
-| of_hour      | int    | 关机 小时字段                                                      |
-| of_minute    | int    | 关机 分钟字段                                                      |
-| result       | 对象     | Java函数调用结果反馈，result.code=0成功，result.code!=0失败,result.msg描述信息 |
-
-
-
 ### 2.4 关机：
     const shutdown =()=> {
-        NativeModules.OMDeviceModule.invoke({methodName: 'shutdown'},  result => {
+        NativeModules.AndroidNativeModule.invoke({methodName: 'shutdown'},  result => {
                 console.log(result);
             },
         );
@@ -184,7 +176,7 @@ npm publish
 
 ### 2.5 重启：
     const reboot =()=> {
-        NativeModules.OMDeviceModule.invoke({methodName: 'reboot'},  result => {
+        NativeModules.AndroidNativeModule.invoke({methodName: 'reboot'},  result => {
                 console.log(result);
             },
         );
@@ -193,7 +185,7 @@ npm publish
 
 ### 2.6 开启屏背光：
     const setLCDOn =()=> {
-        NativeModules.OMDeviceModule.invoke({methodName: 'setLCDOn'},  result => {
+        NativeModules.AndroidNativeModule.invoke({methodName: 'setLCDOn'},  result => {
                 console.log(result);
             },
         );
@@ -201,7 +193,7 @@ npm publish
 
 ### 2.7 关闭屏背光：
     const setLCDOff =()=> {
-        NativeModules.OMDeviceModule.invoke({methodName: 'setLCDOff'},  result => {
+        NativeModules.AndroidNativeModule.invoke({methodName: 'setLCDOff'},  result => {
                 console.log(result);
             },
         );
@@ -209,7 +201,7 @@ npm publish
 
 ### 2.8 调整系统Wi-Fi设置界面：
     const gotoWiFi =()=> {
-        NativeModules.OMDeviceModule.invoke({methodName: 'gotoWiFi'},  result => {
+        NativeModules.AndroidNativeModule.invoke({methodName: 'gotoWiFi'},  result => {
                 console.log(result);
             },
         );
@@ -217,7 +209,7 @@ npm publish
 
 ### 2.9 调整系统语言设置界面：
     const gotoWiFi =()=> {
-        NativeModules.OMDeviceModule.invoke({methodName: 'gotoLanguage'},  result => {
+        NativeModules.AndroidNativeModule.invoke({methodName: 'gotoLanguage'},  result => {
                 console.log(result);
             },
         );
