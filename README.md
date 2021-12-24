@@ -1,6 +1,6 @@
 [TOC]
 
-圆明视界OM系统接口文档  -- ShowDoc 
+圆明视界OM系统接口文档  -- ShowDoc
 https://www.showdoc.com.cn/yuanshi
 
 # 一、SDK集成
@@ -13,7 +13,9 @@ https://www.showdoc.com.cn/yuanshi
 # 二、React Native与Java数据交互
 
 ## 1. 获取设备信息调用方式
+
 ### 1.1 获取设备所有信息：
+
     const getAllInfo = () => {
         NativeModules.AndroidNativeModule.invoke({methodName: 'allInfo'}, result => {
             console.log(result.mac);
@@ -57,6 +59,7 @@ https://www.showdoc.com.cn/yuanshi
 -->
 
 ### 1.2 单独获取设备某个参数示例
+
     //获取设备Mac地址
     const getDeviceMac = () => {
         NativeModules.AndroidNativeModule.invoke({methodName: 'mac'}, result => {
@@ -65,6 +68,7 @@ https://www.showdoc.com.cn/yuanshi
     };
 
 ### 1.3 目前支持的获取设备信息如下（注意参数大小写）
+
 | 参数                         | 类型     | 描述              |
 |:---------------------------|:-------|-----------------|
 | mac                        | String | 设备mac地址         |
@@ -83,8 +87,8 @@ https://www.showdoc.com.cn/yuanshi
 ## 2.控制设备信息调用方式
 
 
+### 2.1  设置音量：
 
-### 2.1 设置音量：
     const setVolume =(value)=> {
         NativeModules.AndroidNativeModule.invoke({methodName: 'setVolume', volume: value},  result => {
                 console.log(result);
@@ -101,6 +105,8 @@ https://www.showdoc.com.cn/yuanshi
 
 
 ### 2.2 设置屏幕亮度：
+
+
     const setScreenBrightness =(value)=> {
         NativeModules.AndroidNativeModule.invoke({methodName: 'setScreenBrightness', brightness: value},  result => {
                 console.log(result);
@@ -116,7 +122,58 @@ https://www.showdoc.com.cn/yuanshi
 | result              | 对象     | Java函数调用结果反馈，result.code=0成功，result.code!=0失败,result.msg描述信息 |
 
 
-### 2.3 关机：
+### 2.3 设置屏幕亮度：
+
+    const setOnOffTime = (
+      year1,
+      month1,
+      day1,
+      hour1,
+      minute1,
+      year2,
+      month2,
+      day2,
+      hour2,
+      minute2,
+    ) => {
+      NativeModules.AndroidNativeModule.invoke(
+        {
+          methodName: 'setOnOffTime',
+          on_year: year1,
+          on_month: month1,
+          on_day: day1,
+          on_hour: hour1,
+          on_minute: minute1,
+          off_year: year2,
+          off_month: month2,
+          off_day: day2,
+          off_hour: hour2,
+          off_minute: minute2,
+        },
+        result => {
+          console.log(result);
+        },
+      );
+    };
+
+| 参数           | 类型     | 描述                                                           |
+|:-------------|:-------|--------------------------------------------------------------|
+| setOnOffTime | String | 调用Java层设置音量的函数                                               |
+| on_year      | int    | 开机 年字段                                                       |
+| on_month     | int    | 开机 月字段                                                       |
+| on_day       | int    | 开机 日字段                                                       |
+| on_hour      | int    | 开机 小时字段                                                      |
+| on_minute    | int    | 开机 分钟字段                                                      |
+| of_year      | int    | 关机 年字段                                                       |
+| of_month     | int    | 关机 月字段                                                       |
+| of_day       | int    | 关机 日字段                                                       |
+| of_hour      | int    | 关机 小时字段                                                      |
+| of_minute    | int    | 关机 分钟字段                                                      |
+| result       | 对象     | Java函数调用结果反馈，result.code=0成功，result.code!=0失败,result.msg描述信息 |
+
+
+
+### 2.4 关机：
     const shutdown =()=> {
         NativeModules.AndroidNativeModule.invoke({methodName: 'shutdown'},  result => {
                 console.log(result);
@@ -124,7 +181,7 @@ https://www.showdoc.com.cn/yuanshi
         );
     };
 
-### 2.4 重启：
+### 2.5 重启：
     const reboot =()=> {
         NativeModules.AndroidNativeModule.invoke({methodName: 'reboot'},  result => {
                 console.log(result);
@@ -133,7 +190,7 @@ https://www.showdoc.com.cn/yuanshi
     };
 
 
-### 2.5 开启屏背光：
+### 2.6 开启屏背光：
     const setLCDOn =()=> {
         NativeModules.AndroidNativeModule.invoke({methodName: 'setLCDOn'},  result => {
                 console.log(result);
@@ -141,7 +198,7 @@ https://www.showdoc.com.cn/yuanshi
         );
     };
 
-### 2.6 关闭屏背光：
+### 2.7 关闭屏背光：
     const setLCDOff =()=> {
         NativeModules.AndroidNativeModule.invoke({methodName: 'setLCDOff'},  result => {
                 console.log(result);
@@ -149,7 +206,7 @@ https://www.showdoc.com.cn/yuanshi
         );
     };
 
-### 2.7 调整系统Wi-Fi设置界面：
+### 2.8 调整系统Wi-Fi设置界面：
     const gotoWiFi =()=> {
         NativeModules.AndroidNativeModule.invoke({methodName: 'gotoWiFi'},  result => {
                 console.log(result);
@@ -157,7 +214,7 @@ https://www.showdoc.com.cn/yuanshi
         );
     };
 
-### 2.8 调整系统语言设置界面：
+### 2.9 调整系统语言设置界面：
     const gotoWiFi =()=> {
         NativeModules.AndroidNativeModule.invoke({methodName: 'gotoLanguage'},  result => {
                 console.log(result);
