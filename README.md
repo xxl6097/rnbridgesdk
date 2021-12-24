@@ -1,49 +1,13 @@
 [TOC]
 
+圆明视界OM系统接口文档  -- ShowDoc 
+https://www.showdoc.com.cn/yuanshi
 
-# 一、Android App工程配置
+# 一、SDK集成
 
-## 1. app/build.gradle依赖库配置
-    dependencies {
-        implementation 'com.github.xxxxx:mtscensesdk:0.0.0'
-    }
+## 1. 请打开一个终端/命令提示行，进入到项目目录中（即包含有 package.json 文件的目录），然后运行下列命令来安装：
 
-## 2. MainApplication类配置
-    public class MainApplication extends Application implements ReactApplication {
-    
-        private final ReactNativeHost mReactNativeHost =
-            new ReactNativeHost(this) {
-              @Override
-              public boolean getUseDeveloperSupport() {
-                return BuildConfig.DEBUG;
-            }
-    
-            @Override
-            protected List<ReactPackage> getPackages() {
-              @SuppressWarnings("UnnecessaryLocalVariable")
-              List<ReactPackage> packages = new PackageList(this).getPackages();
-                //添加React Native与java交互类
-                packages.add(new AndroidReactPackage());
-              return packages;
-            }
-    
-            @Override
-            protected String getJSMainModuleName() {
-              return "index";
-            }
-          };
-    }
-
-## 2. MainActivity类配置
-
-    public class MainActivity extends ReactActivity {
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-          //初始化如下代码
-          AndroidApi.init(this);
-          super.onCreate(savedInstanceState);
-        }
-    }
+    yarn add react-native-rnbridgesdk
 
 
 # 二、React Native与Java数据交互
@@ -118,23 +82,9 @@
 
 ## 2.控制设备信息调用方式
 
-### 2.1 设置屏幕旋转：
-    //示例：设置屏幕旋转
-    const setRotation = value => {
-        NativeModules.AndroidNativeModule.invoke({methodName: 'setRotation', degree: value},  result => {
-                console.log(result);
-            },
-        );
-    };
-
-| 参数          | 类型     | 描述                                                           |
-|:------------|:-------|--------------------------------------------------------------|
-| setRotation | String | 调用Java层旋转的函数                                                 |
-| degree      | String | degree:可以有4种值（"0"，"90"，"180"，"270"），其他值默认为和"0"一样的处理方式        |
-| result      | 对象     | Java函数调用结果反馈，result.code=0成功，result.code!=0失败,result.msg描述信息 |
 
 
-### 2.2 设置音量：
+### 2.1 设置音量：
     const setVolume =(value)=> {
         NativeModules.AndroidNativeModule.invoke({methodName: 'setVolume', volume: value},  result => {
                 console.log(result);
@@ -150,7 +100,7 @@
 | result    | 对象     | Java函数调用结果反馈，result.code=0成功，result.code!=0失败,result.msg描述信息 |
 
 
-### 2.3 设置屏幕亮度：
+### 2.2 设置屏幕亮度：
     const setScreenBrightness =(value)=> {
         NativeModules.AndroidNativeModule.invoke({methodName: 'setScreenBrightness', brightness: value},  result => {
                 console.log(result);
@@ -166,7 +116,7 @@
 | result              | 对象     | Java函数调用结果反馈，result.code=0成功，result.code!=0失败,result.msg描述信息 |
 
 
-### 2.4 关机：
+### 2.3 关机：
     const shutdown =()=> {
         NativeModules.AndroidNativeModule.invoke({methodName: 'shutdown'},  result => {
                 console.log(result);
@@ -174,7 +124,7 @@
         );
     };
 
-### 2.5 重启：
+### 2.4 重启：
     const reboot =()=> {
         NativeModules.AndroidNativeModule.invoke({methodName: 'reboot'},  result => {
                 console.log(result);
@@ -183,7 +133,7 @@
     };
 
 
-### 2.6 开启屏背光：
+### 2.5 开启屏背光：
     const setLCDOn =()=> {
         NativeModules.AndroidNativeModule.invoke({methodName: 'setLCDOn'},  result => {
                 console.log(result);
@@ -191,7 +141,7 @@
         );
     };
 
-### 2.7 关闭屏背光：
+### 2.6 关闭屏背光：
     const setLCDOff =()=> {
         NativeModules.AndroidNativeModule.invoke({methodName: 'setLCDOff'},  result => {
                 console.log(result);
@@ -199,7 +149,7 @@
         );
     };
 
-### 2.8 调整系统Wi-Fi设置界面：
+### 2.7 调整系统Wi-Fi设置界面：
     const gotoWiFi =()=> {
         NativeModules.AndroidNativeModule.invoke({methodName: 'gotoWiFi'},  result => {
                 console.log(result);
@@ -207,7 +157,7 @@
         );
     };
 
-### 2.9 调整系统语言设置界面：
+### 2.8 调整系统语言设置界面：
     const gotoWiFi =()=> {
         NativeModules.AndroidNativeModule.invoke({methodName: 'gotoLanguage'},  result => {
                 console.log(result);
