@@ -1,0 +1,26 @@
+{
+  "name": "react-native-rnbridgesdk",
+  "version": "0.0.3",
+  "description": "A Android SDK for OM",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },"repository": {
+  "type": "git",
+  "url": "git+https://github.com/xxl6097/rnbridgesdk.git"
+},
+  "keywords": [
+    "rnbridgesdk",
+    "android",
+    "ios"
+  ],
+  "author": "uuxia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xxl6097/rnbridgesdk/issues"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.57.0"
+  },
+  "homepage": "https://github.com/xxl6097/rnbridgesdk#readme"
+}

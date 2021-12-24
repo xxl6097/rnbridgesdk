@@ -1,12 +1,11 @@
 [TOC]
 
-应用于圆明视界OM系统控制设备的SDK
 
 # 一、Android App工程配置
 
 ## 1. app/build.gradle依赖库配置
     dependencies {
-        implementation 'com.github.xxl6097:rnbridgesdk:0.0.8'
+        implementation 'com.github.xxxxx:mtscensesdk:0.0.0'
     }
 
 ## 2. MainApplication类配置

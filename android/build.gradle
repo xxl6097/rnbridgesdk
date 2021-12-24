@@ -1,6 +1,4 @@
 apply plugin: "com.android.library"
-apply plugin: 'maven-publish'
-apply plugin: 'signing'
 
 android {
     compileSdkVersion 29
@@ -11,8 +9,6 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
-
     }
 
     buildTypes {
@@ -28,12 +24,26 @@ android {
     }
 }
 
+repositories {
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        // Matches the RN Hello World template
+        // https://github.com/facebook/react-native/blob/1e8f3b11027fe0a7514b4fc97d0798d3c64bc895/local-cli/templates/HelloWorld/android/build.gradle#L21
+        url "$projectDir/../node_modules/react-native/android"
+    }
+    mavenCentral()
+    mavenLocal()
+    google()
+    jcenter()
+
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //implementation 'com.github.jitpack:android-example:1.0.1'
-//    implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation "com.facebook.react:react-native:+"  // From node_modules
 //    implementation "com.facebook.react:react-native:0.63.1"
-    implementation 'com.walmartlabs.ern:react-native:0.63.1'
+//    implementation 'com.walmartlabs.ern:react-native:0.63.1'
 //    implementation 'com.facebook.react:react-native:0.63.1'// From node_modules
 //    implementation "com.facebook.react:react-native:0.20.1"  // From node_modules
 
@@ -44,5 +54,3 @@ dependencies {
 //    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
 //    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
 }
-
-apply from: 'maven.gradle'
