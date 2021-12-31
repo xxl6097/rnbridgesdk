@@ -112,6 +112,8 @@ public class OMDeviceModule extends ReactContextBaseJavaModule{
         }
     }
 
+
+
     public static WritableMap bundleToWritableMap(Bundle bundle){
         WritableMap writableMap = Arguments.fromBundle(bundle);
         return writableMap;
@@ -162,6 +164,35 @@ public class OMDeviceModule extends ReactContextBaseJavaModule{
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             Log.i("uu_", "3invoke失败"+(e!=null?e.getMessage():""));
+            e.printStackTrace();
+        }
+    }
+
+    public static void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        String classname = getClassName();
+        if (classname == null)
+            return;
+        try {
+            Object object = objects.get(classname.toUpperCase());
+            if (object == null) {
+                Log.i("uu_", "onRequestPermissionsResult 失败，object is null");
+                return;
+            }
+
+            Method method = object.getClass().getMethod("onRequestPermissionsResult", Integer.class,String[].class,Integer[].class);
+            if (method == null) {
+                Log.i("uu_", "onRequestPermissionsResult 失败，method is null");
+                return;
+            }
+            Object result = method.invoke(object, requestCode, permissions,grantResults);
+        } catch (NoSuchMethodException e) {
+            Log.i("uu_", "1onRequestPermissionsResult 失败"+(e!=null?e.getMessage():""));
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            Log.i("uu_", "2onRequestPermissionsResult 失败"+(e!=null?e.getMessage():""));
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            Log.i("uu_", "3onRequestPermissionsResult 失败"+(e!=null?e.getMessage():""));
             e.printStackTrace();
         }
     }

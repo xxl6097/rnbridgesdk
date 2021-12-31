@@ -1,6 +1,6 @@
 {
   "name": "react-native-rnbridgesdk",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "A Android SDK for OM",
   "main": "index.js",
   "scripts": {
